@@ -30,12 +30,6 @@ pipeline {
             }
         }
 
-    // stage('Manual Approval') {
-    //     steps {
-    //         input message: 'Proceed with applying Terraform changes?', ok: 'Apply'
-    //     }
-    // }
-
         stage('Apply') {
             steps {
                 sh 'terraform apply -auto-approve tfplan'

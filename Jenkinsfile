@@ -23,19 +23,19 @@ pipeline {
                 sh 'terraform validate'
             }
         }
-        stage('Plan Destroy') {
-           steps {
-              sh 'terraform plan -destroy -var-file=terraform.tfvars -out=tfplan_destroy'
-    }
-}
 
-stage('Apply Destroy') {
-    steps {
-        sh 'terraform apply -auto-approve tfplan_destroy'
+        stage('Plan Apply') {
+            steps {
+                sh 'terraform plan -var-file=terraform.tfvars -out=tfplan_apply'
+            }
+        }
+
+        stage('Apply') {
+            steps {
+                sh 'terraform apply -auto-approve tfplan_apply'
+            }
+        }
     }
-}
-    }
-        
 
     post {
         always {

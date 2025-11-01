@@ -12,3 +12,13 @@ provider "aws" {
   region = var.region
 
 }
+
+terraform {
+  backend "s3" {
+    bucket         = "gururaj-terraform-state-bucket"
+    key            = "vpc-ec2/terraform.tfstate"
+    region         = "ap-northeast-1"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}

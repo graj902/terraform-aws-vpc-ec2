@@ -109,9 +109,7 @@ resource "aws_security_group" "web_sg" {
       Name = "${var.project_name}-web-sg"
     }
   )
-  lifecycle {
-    prevent_destroy = true
-  }
+  
 }
 
 #######################################

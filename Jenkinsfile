@@ -30,11 +30,11 @@ pipeline {
             }
         }
 
-        stage('Manual Approval') {
+       ''' stage('Manual Approval') {
             steps {
                 input message: 'Proceed with applying Terraform changes?', ok: 'Apply'
             }
-        }
+        } '''
 
         stage('Apply') {
             steps {

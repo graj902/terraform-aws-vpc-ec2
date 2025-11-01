@@ -32,7 +32,7 @@ pipeline {
         stage('Plan Infrastructure') {
             steps {
                 sh '''
-                terraform plan -input=false -out=tfplan
+                terraform plan -input=false -var-file=terraform.tfvars  -out=tfplan
                 '''
             }
         }
@@ -49,6 +49,9 @@ pipeline {
         }
 
         stage('Apply Terraform') {
+            when {
+        expression { params.APPLY_CHANGES == true }
+    }
             steps {
                 sh '''
                 terraform apply -input=false -auto-approve tfplan

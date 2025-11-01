@@ -23,7 +23,7 @@ pipeline {
                 sh 'terraform validate'
             }
         }
-         # i want to add plan destroy stage here
+         // i want to add plan destroy stage here
         stage('Plan destroy') {
             steps {
                 sh 'terraform destroy -var-file=terraform.tfvars -out=tfplan_destroy'

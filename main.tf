@@ -95,6 +95,12 @@ resource "aws_security_group" "web_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port   = 0
@@ -116,7 +122,7 @@ resource "aws_security_group" "web_sg" {
 # EC2 Instance
 #######################################
 resource "aws_instance" "web" {
-  count                       = 4
+  count                       = 1
   ami                         = var.ami_id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id

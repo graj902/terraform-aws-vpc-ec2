@@ -26,13 +26,13 @@ pipeline {
          // i want to add plan destroy stage here
         stage('Plan ') {
             steps {
-                sh 'terraform plan  -var-file=terraform.tfvars -out=tfplan_apply'
+                sh 'terraform plan  -var-file=terraform.tfvars -out=tfplan_destroy'
             }
         }
 
-        stage('apply') {
+        stage('destroy') {
             steps {
-                sh 'terraform apply -auto-approve tfplan_apply'
+                sh 'terraform destroy -auto-approve tfplan_destroy'
             }
         }
     }

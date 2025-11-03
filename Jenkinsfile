@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['apply', 'destroy'],
+            description: 'Select whether to apply (create/update) or destroy the infrastructure'
+        )
+    }
+
     environment {
         AWS_REGION = 'ap-northeast-1'
     }
@@ -23,16 +31,28 @@ pipeline {
                 sh 'terraform validate'
             }
         }
-         // i want to add plan destroy stage here
-        stage('Plan ') {
+
+        stage('Plan') {
             steps {
-                sh 'terraform plan  -var-file=terraform.tfvars -out=tfplan_apply'
+                script {
+                    if (params.ACTION == 'apply') {
+                        sh 'terraform plan -var-file=terraform.tfvars -out=tfplan_apply'
+                    } else {
+                        sh 'terraform plan -destroy -var-file=terraform.tfvars -out=tfplan_destroy'
+                    }
+                }
             }
         }
 
-        stage('destroy') {
+        stage('Execute') {
             steps {
-                sh 'terraform apply -auto-approve tfplan_apply'
+                script {
+                    if (params.ACTION == 'apply') {
+                        sh 'terraform apply -auto-approve tfplan_apply'
+                    } else {
+                        sh 'terraform apply -auto-approve tfplan_destroy'
+                    }
+                }
             }
         }
     }

@@ -42,11 +42,11 @@ pipeline {
             steps {
                 script {
                     if (ACTION == 'apply') {
-                        echo "🟢 Applying Terraform changes..."
+                        echo " Applying Terraform changes..."
                         sh 'terraform plan -var-file=terraform.tfvars -out=tfplan_apply'
                         sh 'terraform apply -auto-approve tfplan_apply'
                     } else if (ACTION == 'destroy') {
-                        echo "🔴 Destroying Terraform resources..."
+                        echo " Destroying Terraform resources..."
                         sh 'terraform destroy -auto-approve -var-file=terraform.tfvars'
                     }
                 }

@@ -130,6 +130,12 @@ resource "aws_instance" "web" {
   key_name                    = var.key_name
   associate_public_ip_address = true
 
+  root_block_device {
+    volume_size = 30                # Increase root volume to 30 GB
+    volume_type = "gp3"             # General Purpose SSD
+    delete_on_termination = true    # Automatically delete on destroy
+  }
+
   tags = merge(
     var.common_tags,
     {
